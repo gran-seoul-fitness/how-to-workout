@@ -107,7 +107,8 @@ function initGate() {
     if (!/^SANTA-[A-Z0-9]{4}-[A-Z0-9]{4}$/.test(code)) { msg.textContent = '코드 모양이 다르다네. SANTA-XXXX-XXXX 형식이라네.'; return; }
     msg.className = 'gmsg'; msg.textContent = '산타가 확인하는 중…'; $('#gGo2').disabled = true;
     try {
-      const r = await (await fetch(SANTA_API, { method: 'POST', body: JSON.stringify({ action: 'activate', code, device: devId() }) })).json();
+      const call = async () => { const res = await fetch(SANTA_API, { method: 'POST', body: JSON.stringify({ action: 'activate', code, device: devId() }) }); const t = await res.text(); try { return JSON.parse(t); } catch (e) { throw new Error('응답이 JSON이 아님: ' + res.status + ' ' + t.slice(0, 120)); } };
+      let r; for (let k = 0; ; k++) { try { r = await call(); break; } catch (e) { console.warn('[santa] activate 실패', k + 1, e); if (k >= 2) throw e; await new Promise(z => setTimeout(z, 900 * (k + 1))); } }
       if (r.ok) { localStorage.setItem(KEY_LS, code); msg.className = 'gmsg ok'; msg.textContent = '봉인이 풀렸다네!'; setTimeout(() => { $('#cover').classList.add('hide'); boot(); }, 600); }
       else msg.textContent = r.err === 'server' ? '산타의 장부를 못 열었다네. 데스크에 말해 주게.' : r.err === 'used' ? '이미 다른 휴대폰에서 연 코드라네. 휴대폰을 바꿨다면 데스크에 말해 주게.' : '없는 코드라네. 다시 확인해 주게.';
     } catch (e) { msg.textContent = '연결이 불안정하다네. 잠시 뒤 다시 눌러 주게.'; }
