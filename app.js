@@ -109,7 +109,7 @@ function initGate() {
     try {
       const r = await (await fetch(SANTA_API, { method: 'POST', body: JSON.stringify({ action: 'activate', code, device: devId() }) })).json();
       if (r.ok) { localStorage.setItem(KEY_LS, code); msg.className = 'gmsg ok'; msg.textContent = '봉인이 풀렸다네!'; setTimeout(() => { $('#cover').classList.add('hide'); boot(); }, 600); }
-      else msg.textContent = r.err === 'used' ? '이미 다른 휴대폰에서 연 코드라네. 휴대폰을 바꿨다면 데스크에 말해 주게.' : '없는 코드라네. 다시 확인해 주게.';
+      else msg.textContent = r.err === 'server' ? '산타의 장부를 못 열었다네. 데스크에 말해 주게.' : r.err === 'used' ? '이미 다른 휴대폰에서 연 코드라네. 휴대폰을 바꿨다면 데스크에 말해 주게.' : '없는 코드라네. 다시 확인해 주게.';
     } catch (e) { msg.textContent = '연결이 불안정하다네. 잠시 뒤 다시 눌러 주게.'; }
     $('#gGo2').disabled = false;
   };
