@@ -90,7 +90,7 @@ $$('#tabs button').forEach(b => b.onclick = () => show(b.dataset.s));
 $('#backBtn').onclick = () => show('today');
 $('#open').onclick = () => { $('#cover').classList.add('hide'); boot(); };
 /* ---------- 교환 코드: 12월 챌린지에서 받은 코드로 처음 한 번만 열기(처음 연 휴대폰에 묶임) ---------- */
-const SANTA_API = '';   // Apps Script 웹 앱 주소(배포 후 넣기). 비어 있으면 코드 없이 열림(미리보기용)
+const SANTA_API = 'https://script.google.com/macros/s/AKfycbwJ0iPLXn4fdekuz0tzj2RKMudeb2A9xVcnHEP6Vkmj2MCZS8dLU33nyo7Qefb17Rc/exec';   // Apps Script 웹 앱 주소(배포 후 넣기). 비어 있으면 코드 없이 열림(미리보기용)
 const KEY_LS = 'santaKey';
 const devId = () => { try { let d = localStorage.getItem('santaDev'); if (!d) { d = (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(36).slice(2)); localStorage.setItem('santaDev', d); } return d; } catch (e) { return 'nodev'; } };
 const unlocked = () => { try { return !SANTA_API || !!localStorage.getItem(KEY_LS); } catch (e) { return false; } };
