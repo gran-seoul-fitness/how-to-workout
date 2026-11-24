@@ -191,7 +191,8 @@ const LETTERS = [
     note: '라운드 숄더는 느낌이 아니라 <b>구조</b>의 문제라네. 등(흉추)이 굽으면 그 위의 어깨뼈가 앞으로 밀리고, 쇄골 아래·소흉근 밑 <b>좁은 통로</b>가 눌리지. 등을 펴고 날개뼈를 제자리로 돌려놓는 운동부터 시작하게.', links: ['wallang', 'tspine', 'facepull', 'rdfly'] },
   { v: 'Vol.04', m: '2026. 11', s: '호흡', t: '나는 호흡을 제대로 하고 있을까?', bk: '#e8742a', fg: '#fff', h: 232, img: 'letters/vol4.webp', stamp: 95,
     note: '<b>횡격막</b>이 제대로 내려가지 않으면 목과 어깨가 대신 숨을 쉬느라 뻐근해진다네. 숨은 앞뒤가 아니라 <b>360°</b>로. 무거운 걸 들 땐 버티는 구간에 들이마시고, 힘쓰는 순간에 내쉬게.', links: ['breath', 'squat', 'latpd'] },
-  { v: 'Vol.05', m: '2026. 12', s: '무릎', t: '무릎', bk: '#b4573a', fg: '#fff', h: 200, lock: true }
+  { v: 'Vol.05', m: '2026. 12', s: '무릎', t: '무릎이 아파 보신 적 있나요?', bk: '#b4573a', fg: '#fff', h: 200, img: 'letters/vol5.webp', stamp: 95, stampFrom: '2027-01-01',
+    note: '무릎은 <b>뼈는 기둥, 연골은 쿠션, 인대는 밧줄</b>처럼 한 덩어리로 움직인다네. 앉고 설 땐 무릎이 <b>안으로 꺾이지 않게</b> 엉덩이 힘으로 잡아 주고, 서 있을 땐 <b>뒤로 쫙 펴지 말게</b>. 연골은 스펀지라 걸을 때 영양을 받으니, 트레드밀에선 <b>보폭은 짧게, 발걸음은 빠르게</b> 걸어 보게.', links: ['boxsq', 'rlunge', 'hipthrust', 'incwalk'] }
 ];
 function renderShelf() {
   const FB = ['#e0a77c', '#c7cdb9', '#a9bccd', '#ead6bc', '#f4ece0', '#2d2a28', '#d27b52', '#8fa39a', '#f6c08e', '#e8dccb'];
@@ -203,7 +204,7 @@ function toastLock(b) { const t = document.createElement('div'); t.className = '
 function openLetter(i) {
   const L = LETTERS[i];
   $('#rVol').textContent = `${L.m} — ${L.v}`; $('#rTitle').textContent = L.t;
-  $('#letter').innerHTML = `<img src="${L.img}" alt="${L.t} 웰니스 레터" loading="lazy"><div class="stamp" style="top:${L.stamp}%">지난 호 · 마감<small>QR 참여는 끝났어요</small></div>`;
+  $('#letter').innerHTML = `<img src="${L.img}" alt="${L.t} 웰니스 레터" loading="lazy">${L.stamp && !(L.stampFrom && today() < L.stampFrom) ? `<div class="stamp" style="top:${L.stamp}%">지난 호 · 마감<small>QR 참여는 끝났어요</small></div>` : ''}`;
   $('#rNote').innerHTML = `🎅 <b>산타의 한 줄</b><br>${L.note}`;
   $('#rLinks').innerHTML = L.links.map((k, j) => exRow([k], j)).join(''); bindEx($('#rLinks'));
   $('#rKeepMsg').textContent = ''; $('#rKeep').onclick = () => keepLetter(L);
