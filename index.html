@@ -356,6 +356,30 @@ background:linear-gradient(115deg,rgba(255,226,196,.82),rgba(255,180,120,.78));b
 .phone.arrive .shelf .book{animation:bk .5s cubic-bezier(.3,1.4,.5,1) backwards;animation-delay:calc(var(--i) * 80ms + 150ms)}
 @keyframes bk{from{transform:translateY(-60px);opacity:0}}
 @media (prefers-reduced-motion:reduce){#warp{display:none!important}.phone.arrive .shelf .book{animation:none}}
+
+/* ---- 서고: 세로 가득 찬 책장 + 가운데 빛나는 레터 칸 ---- */
+.phone.night::before{background:radial-gradient(420px 320px at 50% -6%,rgba(255,242,210,.95),rgba(255,214,150,.55) 45%,rgba(255,190,120,0) 75%),radial-gradient(300px 300px at 110% 55%,rgba(230,130,55,.45),rgba(230,130,55,0) 70%),radial-gradient(280px 280px at -12% 85%,rgba(170,100,50,.45),rgba(170,100,50,0) 70%),linear-gradient(#f0d6b4 0%,#d9b48a 55%,#c8955f 100%)}
+.shelf.case{margin:12px -4px 0;padding:14px 12px 12px;border-radius:26px 26px 18px 18px;border:0;display:flex;flex-direction:column;gap:0;
+  background:linear-gradient(rgba(120,70,30,.10),rgba(70,35,12,.28)),url(tex/oak.webp) center/520px,#c8955f;
+  box-shadow:inset 0 0 0 7px rgba(255,236,206,.28),inset 0 0 40px rgba(60,28,8,.35),0 20px 40px rgba(120,65,25,.28)}
+.shelf.case::after{display:none}
+.case .cr{position:relative;flex:1;min-height:60px;display:flex;align-items:flex-end;gap:2px;padding:10px 8px 0;overflow:hidden;
+  background:linear-gradient(rgba(70,32,10,.55),rgba(110,58,24,.28));border-radius:6px 6px 0 0;box-shadow:inset 0 10px 14px -6px rgba(40,15,0,.5)}
+.case .cr::after{content:"";position:absolute;left:0;right:0;bottom:0;height:9px;background:linear-gradient(#e2bb8a,#a8743f);box-shadow:0 2px 0 #7d5129}
+.case .cr+.cr,.case .cr+.feat,.case .feat+.cr{margin-top:9px}
+.case .cr .fb{align-self:flex-end;margin-bottom:9px;filter:saturate(.95) brightness(.9)}
+.case .cr .fb.lean{transform:rotate(-8deg);transform-origin:bottom left;margin-left:8px}
+.case .cr .stk{display:flex;flex-direction:column;justify-content:flex-end;margin:0 4px 9px;gap:1px;filter:saturate(.95) brightness(.9)}
+.case .cr .stk span{display:block;height:9px;border-radius:2px;background:linear-gradient(rgba(255,255,255,.18),rgba(0,0,0,.25)),var(--bk)}
+.case .cr .orb{align-self:flex-end;margin:0 6px 9px;width:22px;height:22px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff3d6,#d9a75e 55%,#7a5018);box-shadow:0 2px 3px rgba(0,0,0,.4);flex:none}
+.case .feat{position:relative;flex:none;padding:26px 10px 0;border-radius:8px 8px 0 0;overflow:visible;
+  background:radial-gradient(120% 90% at 50% 20%,rgba(255,236,190,.95),rgba(255,196,120,.55) 45%,rgba(120,60,20,.25) 100%);
+  box-shadow:inset 0 10px 14px -8px rgba(80,40,10,.4),0 0 0 2px rgba(255,214,150,.55),0 0 34px 6px rgba(255,190,100,.45)}
+.case .feat .tagt{position:absolute;top:7px;left:0;right:0;text-align:center;font:600 9.5px Urbanist,sans-serif;letter-spacing:.24em;color:#8a4a1c}
+.case .feat .row{height:238px;gap:5px;padding:0 2px;border-bottom:13px solid #e8c494;box-shadow:0 6px 0 -1px #a8743f,0 14px 16px -6px rgba(60,25,5,.45);align-items:flex-end;display:flex}
+.case .feat .book{box-shadow:inset 0 1px 0 rgba(255,255,255,.35),4px 0 10px -2px rgba(90,40,10,.45),0 0 0 1px rgba(255,255,255,.12),0 6px 18px rgba(255,170,80,.35)}
+.case .feat .plate{margin:9px auto 10px;width:max-content;max-width:94%;padding:5px 14px;border-radius:6px;font-size:11px;color:#5a3414;background:linear-gradient(#f9e2b4,#d9a95e);box-shadow:inset 0 1px 0 #fff6dc,0 2px 4px rgba(80,40,10,.35);text-align:center}
+.case .feat::before{content:"";position:absolute;left:50%;top:-6px;width:60%;height:8px;margin-left:-30%;border-radius:0 0 50% 50%;background:radial-gradient(closest-side,rgba(255,240,200,.95),rgba(255,210,140,0));filter:blur(2px)}
 </style></head>
 <body><div class="phone">
 
@@ -447,9 +471,8 @@ background:linear-gradient(115deg,rgba(255,226,196,.82),rgba(255,180,120,.78));b
 </section>
 <section class="scr" id="s-lib">
   <h2>산타의 서고</h2>
-  <p class="lead">산타가 서재에 꽂아 둔 웰니스 레터. 책을 눌러 꺼내 읽어 보게.</p>
-  <div class="shelf" id="shelf"></div>
-  <div class="note" style="margin-top:16px"><span>🎅</span><div>레터에서 <b>왜</b>를 읽고, 앱에서 <b>어떻게</b>를 따라 해 보게. 각 레터 끝에 이어지는 운동을 꽂아 두었다네.</div></div>
+  <p class="lead">산타가 꽂아 둔 웰니스 레터라네. 빛나는 책을 꺼내 <b>왜</b>를 읽고, 끝에 이어지는 운동으로 <b>어떻게</b>를 따라 해 보게.</p>
+  <div class="shelf case" id="shelf"></div>
 </section>
 
 <section class="scr" id="s-read">

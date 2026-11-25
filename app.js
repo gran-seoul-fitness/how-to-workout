@@ -196,10 +196,20 @@ const LETTERS = [
     note: '무릎은 <b>뼈는 기둥, 연골은 쿠션, 인대는 밧줄</b>처럼 한 덩어리로 움직인다네. 앉고 설 땐 무릎이 <b>안으로 꺾이지 않게</b> 엉덩이 힘으로 잡아 주고, 서 있을 땐 <b>뒤로 쫙 펴지 말게</b>. 연골은 스펀지라 걸을 때 영양을 받으니, 트레드밀에선 <b>보폭은 짧게, 발걸음은 빠르게</b> 걸어 보게.', links: ['boxsq', 'rlunge', 'hipthrust', 'incwalk'] }
 ];
 function renderShelf() {
-  const FB = ['#e0a77c', '#c7cdb9', '#a9bccd', '#ead6bc', '#f4ece0', '#2d2a28', '#d27b52', '#8fa39a', '#f6c08e', '#e8dccb'];
-  const fb = (c, w, h, cls = '') => `<span class="fb ${cls}" style="--bk:${c};width:${w}px;height:${h}px"><i style="top:${Math.round(h * .16)}px"></i><i style="bottom:${Math.round(h * .16)}px"></i></span>`;
-  $('#shelf').innerHTML = `<div class="row">${fb('#8a5a3a', 12, 150)}${LETTERS.map((L, i) => `<button class="book ${L.lock ? 'lock' : ''} l${i + 1}" data-i="${i}" style="--bk:${L.bk};--fg:${L.fg};--h:${L.h}px;--i:${i}" aria-label="${L.v} ${L.t}"><span class="band b1"></span><span class="band b2"></span><span class="band b3"></span><span class="band b4"></span><span class="v">${L.v.replace('Vol.0', '')}</span><span class="lbl"><span class="t">${L.s}</span></span>${L.lock ? '<span class="seal">🔒</span>' : `<span class="m">${L.m.slice(6)}월</span>`}</button>`).join('')}<span class="bookend"></span></div><div class="tag">8월 ─ 12월 · 그랑서울 피트니스 웰니스 레터</div>`;
-  $$('#shelf .book').forEach(b => b.onclick = () => { const L = LETTERS[+b.dataset.i]; if (L.lock) { b.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(-4px)' }, { transform: 'translateX(4px)' }, { transform: 'translateX(0)' }], { duration: 300 }); toastLock(b); return; } b.style.transform = 'translateY(-40px)'; setTimeout(() => openLetter(+b.dataset.i), 260); });
+  const MUTE = ['#a0623e', '#c48a5c', '#7a4a2e', '#d6a879', '#8c5a3c', '#e2c29a', '#5e3a24', '#b67a4c', '#9a6d4f', '#c9a27a', '#6d4a34', '#e8d2b0', '#8a8a6a', '#7a6f86', '#b2563a'];
+  let seed = 7; const rnd = () => (seed = (seed * 9301 + 49297) % 233280) / 233280;
+  const deco = () => { let h = '', w = 0; while (w < 460) { const r = rnd(); if (r < .07) { h += `<span class="stk">${[0, 1, 2].map(() => `<span style="--bk:${MUTE[Math.floor(rnd() * MUTE.length)]};width:${34 + Math.round(rnd() * 14)}px"></span>`).join('')}</span>`; w += 52; continue; } if (r < .1) { h += '<span class="orb"></span>'; w += 34; continue; } const bw = 11 + Math.round(rnd() * 12), bh = 62 + Math.round(rnd() * 34); h += `<span class="fb ${r > .95 ? 'lean' : ''}" style="--bk:${MUTE[Math.floor(rnd() * MUTE.length)]};width:${bw}px;height:calc(${bh}% - 9px)"></span>`; w += bw + 2; } return `<div class="cr" aria-hidden="true">${h}</div>`; };
+  const feat = `<div class="feat"><div class="tagt">WELLNESS LETTER · 2026</div><div class="row">${LETTERS.map((L, i) => `<button class="book ${L.lock ? 'lock' : ''} l${i + 1}" data-i="${i}" style="--bk:${L.bk};--fg:${L.fg};--h:${L.h}px;--i:${i}" aria-label="${L.v} ${L.t}"><span class="band b1"></span><span class="band b2"></span><span class="band b3"></span><span class="band b4"></span><span class="v">${L.v.replace('Vol.0', '')}</span><span class="lbl"><span class="t">${L.s}</span></span>${L.lock ? '<span class="seal">🔒</span>' : `<span class="m">${L.m.slice(6)}월</span>`}</button>`).join('')}</div><div class="plate tag">8월 ─ 12월 · 그랑서울 피트니스 웰니스 레터</div></div>`;
+  const sh = $('#shelf');
+  const fit = () => {   // 화면 높이에 맞춰 위·아래 칸 수를 정해 책장이 세로를 꽉 채우게
+    seed = 7; sh.innerHTML = feat; sh.style.height = '';
+    const top = sh.getBoundingClientRect().top + window.scrollY, fh = sh.querySelector('.feat').offsetHeight;
+    const H = window.innerHeight - top - 112, n = Math.max(2, Math.min(6, Math.floor((H - fh - 26) / 78)));
+    const up = Math.ceil(n / 2); sh.innerHTML = Array.from({ length: up }, deco).join('') + feat + Array.from({ length: n - up }, deco).join('');
+    sh.style.height = Math.max(fh + 26 + n * 70, H) + 'px';
+    $$('#shelf .book').forEach(b => b.onclick = () => { const L = LETTERS[+b.dataset.i]; if (L.lock) { b.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(-4px)' }, { transform: 'translateX(4px)' }, { transform: 'translateX(0)' }], { duration: 300 }); toastLock(b); return; } b.style.transform = 'translateY(-40px)'; setTimeout(() => openLetter(+b.dataset.i), 260); });
+  };
+  fit(); window.onresize = () => { if (screen === 'lib') fit(); };
 }
 function toastLock(b) { const t = document.createElement('div'); t.className = 'tag'; t.textContent = '🎅 12월 호는 아직 산타가 쓰는 중이라네. 곧 꽂아 두지!'; const old = $('#shelf .tag'); old.replaceWith(t); setTimeout(() => renderShelf(), 2600); }
 function openLetter(i) {
