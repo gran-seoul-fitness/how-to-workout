@@ -8,7 +8,7 @@
   const BASE = (document.currentScript && document.currentScript.src.replace(/[^/]*$/, '')) || 'https://gran-seoul-fitness.github.io/how-to-workout/preview/';
   const COST = 500;
   const SLIDES = [
-    ['ex3d', '3D로 보는 정확한 자세', '돌려 보고, 앞·옆·뒤로 보고, 관절 점까지 켜서 볼 수 있어요.'],
+    ['ex3d', '3D로 보는 정확한 자세', '손가락으로 빙글 돌려서 앞·옆·뒤 어디서든 볼 수 있어요.'],
     ['today', '오늘 컨디션에 맞춘 운동', '쌩쌩·보통·피곤 중 고르면 세트 수와 운동이 알아서 바뀌어요.'],
     ['cues', '자세 체크와 쓰는 근육', '허리 중립, 골반 고정… 동작마다 확인할 것과 일하는 근육을 알려줘요.'],
     ['log', '기록과 오늘의 링', '세트를 체크하면 쉬는 시간 타이머가 돌고, 하루 링이 채워져요.'],
@@ -37,6 +37,9 @@
 .sbp-sl{flex:0 0 62%;scroll-snap-align:center}
 .sbp-sl figure{margin:0;border-radius:20px;overflow:hidden;background:#fff;box-shadow:0 8px 22px rgba(90,50,20,.16);border:1px solid rgba(255,255,255,.8);aspect-ratio:480/855}
 .sbp-sl img{width:100%;height:100%;object-fit:cover;display:block}
+.sbp-sl figure{position:relative}
+.sbp-360{display:inline-block;margin-left:6px;padding:2px 8px;border-radius:99px;background:#E8742A;color:#fff;font-size:10.5px;font-weight:700;font-style:normal;vertical-align:2px;animation:sbp360 2.4s ease-in-out infinite}
+@keyframes sbp360{0%,100%{opacity:.95}50%{opacity:.55}}
 .sbp-sl b{display:block;font-size:14px;margin:10px 2px 3px}
 .sbp-sl span{display:block;font-size:12px;color:#6d5a4a;line-height:1.45;padding:0 2px}
 .sbp-dots{display:flex;gap:5px;justify-content:center;margin:6px 0 0}
@@ -81,7 +84,7 @@
   </div>
 
   <div class="sbp-sec"><p class="sbp-h">미리 살짝 보기</p>
-    <div class="sbp-car">${SLIDES.map(([f, t, d]) => `<div class="sbp-sl"><figure><img loading="lazy" src="${BASE}${f}.webp" alt="${t} 화면"></figure><b>${t}</b><span>${d}</span></div>`).join('')}</div>
+    <div class="sbp-car">${SLIDES.map(([f, t, d]) => `<div class="sbp-sl"><figure><img loading="lazy" src="${BASE}${f}.webp" alt="${t} 화면"></figure><b>${t}${f === 'ex3d' ? '<i class="sbp-360">↻ 360°</i>' : ''}</b><span>${d}</span></div>`).join('')}</div>
     <div class="sbp-dots">${SLIDES.map((_, i) => `<i class="${i ? '' : 'on'}"></i>`).join('')}</div>
   </div>
 
