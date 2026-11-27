@@ -8,7 +8,7 @@
   const BASE = (document.currentScript && document.currentScript.src.replace(/[^/]*$/, '')) || 'https://gran-seoul-fitness.github.io/how-to-workout/preview/';
   const COST = 500;
   const SLIDES = [
-    ['ex3d', '3D로 보는 정확한 자세', '손가락으로 빙글 돌려서 앞·옆·뒤 어디서든 볼 수 있어요.'],
+    ['ex3d', '3D로 보는 정확한 자세', '스쿼트하는 모습을 손가락으로 빙글 돌려 앞·옆·뒤 어디서든 볼 수 있어요.'],
     ['today', '오늘 컨디션에 맞춘 운동', '쌩쌩·보통·피곤 중 고르면 세트 수와 운동이 알아서 바뀌어요.'],
     ['cues', '자세 체크와 쓰는 근육', '허리 중립, 골반 고정… 동작마다 확인할 것과 일하는 근육을 알려줘요.'],
     ['log', '기록과 오늘의 링', '세트를 체크하면 쉬는 시간 타이머가 돌고, 하루 링이 채워져요.'],
